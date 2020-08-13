@@ -5,6 +5,7 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/libs/jquery-minicolors/jquery.minicolors.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/libs/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/libs/quill/dist/quill.snow.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.2.0/sweetalert2.min.css">
 @endsection
 @section('content')
 <!-- Page wrapper  -->
@@ -110,7 +111,8 @@
                           <td>{{ $attributes->price }}</td>
                           <td>{{ $attributes->stock }}</td>
                           <td class="text-right">
-                            <a rel="{{ $attributes->id }}" rel1="delete-attribute" <?php //href="{{ url('/admin/delete-product/'.$product->id) }}" ?> href="javascript:" class="btn btn-danger btn-sm remove">Delete</a>
+                            <button class="btn btn-danger btn-sm" onclick="deleteConfirmation('{{ $attributes->id }}')">Delete</button>
+                            
                           </td>
                         </tr>
                         <!-- Modal -->
@@ -156,15 +158,11 @@
     <script src="{{ asset('assets/extra-libs/multicheck/datatable-checkbox-init.js') }}"></script>
     <script src="{{ asset('assets/extra-libs/multicheck/jquery.multicheck.js') }}"></script>
     <script src="{{ asset('assets/extra-libs/DataTables/datatables.min.js') }}"></script>
-    <sript>
-      $(function() {
-              $('#zero_config').DataTable();
-            });
-    </sript>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.2.0/sweetalert2.all.min.js"></script>
 <script>
     $(function() {
          
-        
+     $('#zero_config').DataTable();   
   // Initialize form validation on the registration form.
   // It has the name attribute "registration"
   $("form[name='validate']").validate({
@@ -217,13 +215,43 @@
       form.submit();
       }
     }); //validation 
-    $('.remove').click(function(){
-        if(confirm('Are You sure you want to delete this ?')){
-            return true;
-        }
-        return false;
-    });
+    
 });
+</script>
+<script type="text/javascript">
+    function deleteConfirmation(id) {
+        swal({
+            title: "Delete?",
+            text: "Please ensure and then confirm!",
+            type: "warning",
+            showCancelButton: !0,
+            confirmButtonText: "Yes, delete it!",
+            cancelButtonText: "No, cancel!",
+            reverseButtons: !0
+        }).then(function (e) {
+            if (e.value === true) {
+                var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+                $.ajax({
+                    type: 'POST',
+                    url: "{{url('/admin/delete-attribute')}}/" + id,
+                    data: {_token: CSRF_TOKEN},
+                    dataType: 'JSON',
+                    success: function (results) {
+                        if (results.success === true) {
+                            
+                            swal("Done!", results.message, "success");
+                        } else {
+                            swal("Error!", results.message, "error");
+                        }
+                    }
+                });
+            } else {
+                e.dismiss;
+            }
+        }, function (dismiss) {
+            return false;
+        })
+    }
 </script>
 <script type="text/javascript">
     $(document).ready(function(){
