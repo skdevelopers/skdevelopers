@@ -8,6 +8,7 @@ use Image;
 use Session;
 use App\Category;
 use App\Product;
+use App\ProductsAttribute;
 
 class ProductsController extends Controller
 {
@@ -93,7 +94,7 @@ class ProductsController extends Controller
     	// Product Details 
     	$productDetails = Product::where(['id'=>$id])->first();
     	// Categories Dropdown start
-       $categories = Category::where(['parent_id'=>0])->orWhere('parent_id',null)->get();
+      $categories = Category::where(['parent_id'=>0])->orWhere('parent_id',null)->get();
        $categories_dropdown = '<option value=""  disbaled>Select</option>';
        foreach($categories as $cat){
        	if($cat->id==$productDetails->category_id){
@@ -136,5 +137,30 @@ class ProductsController extends Controller
     public function deleteProductImage($id = null){
     	Product::where(['id'=>$id])->update(['image'=>'']);
     	return redirect()->back()->with('success','Product Image has been deleted successfully!');
+    }
+
+    public function addAttributes(Request $request, $id=null)
+    {
+      $productDetails = Product::with('attributes')->where(['id'=>$id])->first();
+      //$productDetails = json_decode(json_encode($productDetails),true);
+      //echo '<pre>';print_r($productDetails);die;
+      if($request->isMethod('post'))
+      {
+        $data = $request->all(); //dd($data);
+        foreach($data['sku'] as $key => $val){
+          if(!empty($val)){
+              $attribute = new ProductsAttribute;
+              $attribute->product_id = $id;
+              $attribute->sku   = $val;
+              $attribute->size  = $data['size'][$key];
+              $attribute->price = $data['price'][$key];
+              $attribute->stock = $data['stock'][$key];
+              $attribute->save();
+          }
+        }
+        return redirect('admin/add-attributes/'.$id)->with('success','Product Attributies has been added successfully!');
+      }
+      return view('admin.products.add_attributes')->with(compact('productDetails'));
+
     }
 }

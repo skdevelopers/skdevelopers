@@ -49,8 +49,8 @@ Route::match(['get','post'],'/admin/edit-product/{id}','ProductsController@editP
 Route::get('/admin/view-products','ProductsController@viewProducts');
 Route::get('/admin/delete-product/{$id}','ProductsController@deleteProduct');
 Route::get('/admin/delete-product-image/{id}','ProductsController@deleteProductImage');
+Route::match(['get','post'],'admin/add-attributes/{id}','ProductsController@addAttributes');
 
 });
-Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');

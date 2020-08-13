@@ -78,6 +78,7 @@
                           <td>{{ $product->created_at }}</td>
                           <td class="text-right">
                             <a href="{{ url('/admin/edit-product/'.$product->id) }}" class="btn btn-success btn-sm margin-5" data-toggle="modal" data-target="#Modal{{ $product->id }}">View</a>
+                            <a href="{{ url('/admin/add-attributes/'.$product->id) }}" class="btn btn-success btn-sm margin-5" data-target="#Modal{{ $product->id }}">Add</a>
                             <a href="{{ url('/admin/edit-product/'.$product->id) }}" class="btn btn-cyan btn-sm margin-5 edit">Edit</a>
                             <a rel="{{ $product->id }}" rel1="delete-product" <?php //href="{{ url('/admin/delete-product/'.$product->id) }}" ?> href="javascript:" class="btn btn-danger btn-sm remove">Delete</a>
                           </td>
@@ -158,4 +159,5 @@
               $('#zero_config').DataTable();
             });
     </sript>
+    
 @endsection
