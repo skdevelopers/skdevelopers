@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Auth;
+use DB;
 use Image;
 use Session;
 use App\Category;
@@ -180,5 +181,17 @@ class ProductsController extends Controller
             'message' => $message,
         ]);
            
+    }
+
+    public function addToCart(Request $request){
+      $data = $request->all();
+      if(empty($data['user_email'])){
+          $data['user_email'] = '';
+      }
+      if(empty($data['session_id'])){
+          $data['session_id'] = '';
+      }
+      DB::table('cart')->insert(['product_id'=>$data['product_id'],'product_name'=>$data['product_name'],$product_code=$data['product_code'],$product_color=$data['product_color'],$price=$data['price'],$size=$data['size'],$quantity=$data['quantity'],'user_email'=>$data['user_email'],'session_id'=>$data['session_id']]);
+
     }
 }

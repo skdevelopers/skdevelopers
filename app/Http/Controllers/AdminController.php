@@ -23,7 +23,7 @@ class AdminController extends Controller
    
         if(auth()->attempt(array('email' => $data['email'], 'password' => $data['password'])))
         {
-            if (auth()->user()->is_admin == 1) {
+            if (auth()->user()->type == 1) {
             	Session::put('adminSession',$data['email']);
                 return redirect('/admin/dashboard')
                 	->with('sucess','login successfully.');
