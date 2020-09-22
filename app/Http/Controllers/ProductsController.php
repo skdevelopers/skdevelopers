@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Auth;
 use DB;
 use Image;
@@ -188,10 +189,29 @@ class ProductsController extends Controller
       if(empty($data['user_email'])){
           $data['user_email'] = '';
       }
-      if(empty($data['session_id'])){
-          $data['session_id'] = '';
+      $session_id = Session::get('session_id');
+      if(empty($session_id)){
+        $session_id = str_random(40);
       }
       DB::table('cart')->insert(['product_id'=>$data['product_id'],'product_name'=>$data['product_name'],$product_code=$data['product_code'],$product_color=$data['product_color'],$price=$data['price'],$size=$data['size'],$quantity=$data['quantity'],'user_email'=>$data['user_email'],'session_id'=>$data['session_id']]);
 
+    }
+
+    public function imageFile(){
+      $product = Product::all();
+      $image = $product->pluck('image');
+      $path = asset('/assets/images/products/large/' . $image[0]);
+      $path1 = asset('/assets/images/products/large/' . $image[1]);
+      // read all existing data into an array
+      // create empty canvas with background color
+      // Apply another image as alpha mask on image
+      $img = Image::make($path);
+      $img->mask($path1);
+
+      // Apply a second image with alpha channel masking
+      $img->mask($path1, true);
+      echo "<pre>"; echo($img);
+      die;
+      return view('admin.products.view_products')->with(compact('image'));
     }
 }

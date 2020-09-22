@@ -11,7 +11,7 @@
     <meta name="author" content="Nghia Minh Luong">
     <meta name="keywords" content="Default Description">
     <meta name="description" content="Default keyword">
-    <title>Sky - Homepage</title>
+    <title>SK eCommerce - Homepage</title>
     <!-- Fonts-->
     <link href="https:/fonts.googleapis.com/css?family=Archivo+Narrow:300,400,700%7CMontserrat:300,400,500,600,700,800,900" rel="stylesheet">
     <link rel="stylesheet" href="{{asset('assets/front/plugins/font-awesome/css/font-awesome.min.css')}}">
@@ -70,5 +70,6 @@
 
     <!-- Custom scripts-->
     <script type="text/javascript" src="{{asset('assets/front/js/main.js')}}"></script>
+    @yield('script')
   </body>
 </html>

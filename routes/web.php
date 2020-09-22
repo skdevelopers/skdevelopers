@@ -22,7 +22,7 @@ Route::get('/welcome/{name}', function ($name) {
 Route::get('/admin', 'AdminController@login');
 
 Route::match(['get','post'], '/admin','AdminController@login');
-
+Route::get('/paypal', 'PaymentController@paypal');
 
 Auth::routes();
 
@@ -53,5 +53,7 @@ Route::match(['get','post'],'admin/add-attributes/{id}','ProductsController@addA
 Route::match(['get','post'],'/admin/delete-attribute/{id}','ProductsController@deleteattribute');
 Route::match(['get','post'],'/add-cart','ProductsController@addToCart');
 });
+Route::get('/admin/image','ProductsController@imageFile');
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/image', 'HomeController@Image')->name('home');
