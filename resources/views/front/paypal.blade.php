@@ -476,6 +476,7 @@
       paypal.Buttons({
         createOrder: function(data, actions) {
           return actions.order.create({
+            application_context: { shipping_preference: 'NO_SHIPPING' },
             purchase_units: [{
               amount: {
                 value: '10.00'

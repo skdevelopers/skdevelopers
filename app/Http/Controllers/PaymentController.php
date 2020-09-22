@@ -62,8 +62,5 @@ class PaymentController extends Controller
  *This driver function invokes the captureOrder function with
  *approved order ID to capture the order payment.
  */
-        if (!count(debug_backtrace()))
-        {
-          CaptureOrder::captureOrder('REPLACE-WITH-APPORVED-ORDER-ID', true);
-        }
+       
 }
