@@ -14,7 +14,8 @@
         "intervention/image": "^2.5",
         "laravel/framework": "^6.2",
         "laravel/tinker": "^1.0",
-        "paypal/paypal-checkout-sdk": "1.0.1"
+        "paypal/paypal-checkout-sdk": "1.0.1",
+        "yajra/laravel-datatables-oracle": "^9.11"
     },
     "require-dev": {
         "facade/ignition": "^1.4",
