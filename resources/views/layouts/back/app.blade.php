@@ -116,7 +116,7 @@
     <script src="{{ asset('assets/libs/jquery-minicolors/jquery.minicolors.min.js') }}"></script>
     <script src="{{ asset('assets/libs/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js') }}"></script>
     <script src="{{ asset('assets/libs/quill/dist/quill.min.js') }}"></script>
-     
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script> 
     @yield('scripts')
     <script>
         // Basic Example with form
